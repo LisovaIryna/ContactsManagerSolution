@@ -10,10 +10,12 @@ namespace ContactsManager.UI.Controllers;
 public class AccountController : Controller
 {
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
 
-    public AccountController(UserManager<ApplicationUser> userManager)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
     }
 
     [HttpGet]
@@ -43,6 +45,9 @@ public class AccountController : Controller
         IdentityResult result = await _userManager.CreateAsync(user, registerDTO.Password);
         if (result.Succeeded)
         {
+            // Sign in
+            await _signInManager.SignInAsync(user, isPersistent: false);
+
             return RedirectToAction(nameof(PersonsController.Index), "Persons");
         }
         else
