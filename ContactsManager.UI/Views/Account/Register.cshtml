@@ -10,16 +10,16 @@
 </div>
 
 <div class="form-container">
-    Already Registered? <a asp-action="Login" asp-asp-controller="Account" class="link-hover">Login</a>
+    Already Registered? <a asp-action="Login" asp-controller="Account" class="link-hover">Login</a>
     <h2 class="text-large">Register</h2>
      
-    <form asp-asp-controller="Account" asp-action="Register" method="post">
+    <form asp-controller="Account" asp-action="Register" method="post">
         @* PersonName *@
         <div class="form-field flex">
             <div class="w-25">
                 <label asp-for="PersonName" class="form-label pt">Name</label>
                 <div class="flex-1">
-                    <input asp-formaction="PersonName" class="form-input" />
+                    <input asp-for="PersonName" class="form-input" />
                     <span asp-validation-for="PersonName"></span>
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="w-25">
                 <label asp-for="Email" class="form-label pt">Email</label>
                 <div class="flex-1">
-                    <input asp-formaction="Email" class="form-input" />
+                    <input asp-for="Email" class="form-input" />
                     <span asp-validation-for="Email"></span>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <div class="w-25">
                 <label asp-for="Password" class="form-label pt">Password</label>
                 <div class="flex-1">
-                    <input asp-formaction="Password" class="form-input" />
+                    <input asp-for="Password" class="form-input" />
                     <span asp-validation-for="Password"></span>
                 </div>
             </div>
@@ -52,7 +52,7 @@
             <div class="w-25">
                 <label asp-for="ConfirmPassword" class="form-label pt">Confirm Password</label>
                 <div class="flex-1">
-                    <input asp-formaction="ConfirmPassword" class="form-input" />
+                    <input asp-for="ConfirmPassword" class="form-input" />
                     <span asp-validation-for="ConfirmPassword"></span>
                 </div>
             </div>
@@ -63,7 +63,7 @@
             <div class="w-25">
                 <label asp-for="Phone" class="form-label pt">Phone</label>
                 <div class="flex-1">
-                    <input asp-formaction="Phone" class="form-input" />
+                    <input asp-for="Phone" class="form-input" />
                     <span asp-validation-for="Phone"></span>
                 </div>
             </div>
