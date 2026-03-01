@@ -54,7 +54,15 @@ public static class ConfigureServicesExtension
         services.AddTransient<PersonsListActionFilter>();
 
         // Enable Identity in this project
-        services.AddIdentity<ApplicationUser, ApplicationRole>()
+        services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+        {
+            options.Password.RequiredLength = 5;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = true;
+            options.Password.RequireDigit = false;
+            options.Password.RequiredUniqueChars = 3; // Eg: AB12AB (unique characters are A, B, 1, 2)
+        })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders()
             .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
