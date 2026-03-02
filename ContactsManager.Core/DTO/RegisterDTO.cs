@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,6 +11,7 @@ public class RegisterDTO
     public string PersonName { get; set; }
     [Required(ErrorMessage = "Email can't be blank")]
     [EmailAddress(ErrorMessage = "Email should be in a proper email address format")]
+    [Remote(action: "IsEmailAlreadyRegistered", controller: "Account", ErrorMessage = "Email is already in use")]
     public string Email { get; set; }
     [Required(ErrorMessage = "Phone can't be blank")]
     [RegularExpression("^[0-9]*", ErrorMessage = "Phone number should contain numbers only")]
