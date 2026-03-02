@@ -62,6 +62,11 @@ app.UseAuthentication(); // Reading Identity cookie
 app.UseAuthorization(); // Validates access permissions of the user 
 app.MapControllers(); // Execute the filter pipiline (action + filters)
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(name: "default", pattern: "{controller}/{action}/{id?}"); // Eg: persons/edit/1
+});
+
 app.Run();
 
 public partial class Program { } // make the auto-generated Program accessible programmaticaly
