@@ -1,6 +1,7 @@
 ﻿using ContactsManager.Core.Domain.IdentityEntities;
 using ContactsManager.Filters.ActionFilters;
 using Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,8 @@ public static class ConfigureServicesExtension
         services.AddScoped<IPersonsDeleterService, PersonsDeleterService>();
         services.AddScoped<IPersonsSorterService, PersonsSorterService>();
 
+        services.AddTransient<PersonsListActionFilter>();
+
         if (environment.IsEnvironment("Test") == false)
         {
             services.AddDbContext<ApplicationDbContext>(
@@ -50,8 +53,6 @@ public static class ConfigureServicesExtension
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
                 });
         }
-
-        services.AddTransient<PersonsListActionFilter>();
 
         // Enable Identity in this project
         services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -67,6 +68,16 @@ public static class ConfigureServicesExtension
             .AddDefaultTokenProviders()
             .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
             .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>();
+
+        services.AddAuthorization(options =>
+        {
+            options.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); // enforces authorization policy (user must be authenticated) for all the action methods
+        });
+
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";
+        });
 
         services.AddHttpLogging(options =>
         {
