@@ -64,6 +64,7 @@ app.MapControllers(); // Execute the filter pipiline (action + filters)
 
 app.UseEndpoints(endpoints =>
 {
+    endpoints.MapControllerRoute(name: "areas", pattern: "{area:exists}/{controller=Home}/{action=Index}"); // Eg: Admin/Home/Index Eg: Admin
     endpoints.MapControllerRoute(name: "default", pattern: "{controller}/{action}/{id?}"); // Eg: persons/edit/1
 });
 
