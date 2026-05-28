@@ -1,7 +1,5 @@
 ﻿using Entities;
 using ServiceContracts.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ServiceContracts.DTO;

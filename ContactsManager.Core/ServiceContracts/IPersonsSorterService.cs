@@ -1,11 +1,10 @@
-﻿using System;
-using ServiceContracts.DTO;
+﻿using ServiceContracts.DTO;
 using ServiceContracts.Enums;
 
 namespace ServiceContracts;
 
 /// <summary>
-/// Represents business logic for manipulating Person entity
+/// Represents business logic (sort) for manipulating Person entity
 /// </summary>
 public interface IPersonsSorterService
 {

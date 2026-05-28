@@ -1,11 +1,7 @@
-﻿using System;
-using ServiceContracts.DTO;
-using ServiceContracts.Enums;
-
-namespace ServiceContracts;
+﻿namespace ServiceContracts;
 
 /// <summary>
-/// Represents business logic for manipulating Person entity
+/// Represents business logic (delete) for manipulating Person entity
 /// </summary>
 public interface IPersonsDeleterService
 {
@@ -13,6 +9,6 @@ public interface IPersonsDeleterService
     /// Deletes a person based on the given person id
     /// </summary>
     /// <param name="personID">PersonID to delete</param>
-    /// <returns>Returns true, it the deletion is successful; otherwise false</returns>
+    /// <returns>Returns true, if the deletion is successful; otherwise false</returns>
     Task<bool> DeletePerson(Guid? personID);
 }

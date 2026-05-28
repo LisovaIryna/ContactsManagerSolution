@@ -1,11 +1,9 @@
-﻿using System;
-using ServiceContracts.DTO;
-using ServiceContracts.Enums;
+﻿using ServiceContracts.DTO;
 
 namespace ServiceContracts;
 
 /// <summary>
-/// Represents business logic for manipulating Person entity
+/// Represents business logic (insert) for manipulating Person entity
 /// </summary>
 public interface IPersonsAdderService
 {

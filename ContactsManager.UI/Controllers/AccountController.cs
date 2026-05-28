@@ -53,7 +53,7 @@ public class AccountController : Controller
         if (result.Succeeded)
         {
             // Check status of radio button
-            if (registerDTO.UserType == Core.Enums.UserTypeOptions.Admin)
+            if (registerDTO.UserType == UserTypeOptions.Admin)
             {
                 // Create 'Admin' role
                 if (await _roleManager.FindByNameAsync(UserTypeOptions.Admin.ToString()) is null)
@@ -103,7 +103,7 @@ public class AccountController : Controller
 
     [HttpPost]
     [Authorize("NotAuthorized")]
-    public async Task<IActionResult> Login(LoginDTO loginDTO, string ReturnUrl)
+    public async Task<IActionResult> Login(LoginDTO loginDTO, string? ReturnUrl)
     {
         if (!ModelState.IsValid)
         {
@@ -119,15 +119,11 @@ public class AccountController : Controller
             if (user != null)
             {
                 if (await _userManager.IsInRoleAsync(user, UserTypeOptions.Admin.ToString()))
-                {
                     return RedirectToAction("Index", "Home", new { area = "Admin" });
-                }
             }
 
             if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
-            {
                 return LocalRedirect(ReturnUrl);
-            }
             return RedirectToAction(nameof(PersonsController.Index), "Persons");
         }
         ModelState.AddModelError("Login", "Invalid email or password");
@@ -147,12 +143,8 @@ public class AccountController : Controller
     {
         ApplicationUser user = await _userManager.FindByEmailAsync(email);
         if (user == null)
-        {
             return Json(true); // valid
-        }
         else
-        {
             return Json(false); // invalid
-        }
     }
 }

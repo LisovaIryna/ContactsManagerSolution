@@ -17,6 +17,7 @@ public class PersonsListActionFilter : IActionFilter
     public void OnActionExecuted(ActionExecutedContext context)
     {
         // To do: add after logic here
+
         _logger.LogInformation("{FilterName}.{MethodName}", nameof(PersonsListActionFilter), nameof(OnActionExecuted));
 
         PersonsController personsController = (PersonsController)context.Controller;
@@ -26,32 +27,20 @@ public class PersonsListActionFilter : IActionFilter
         if (parameters != null)
         {
             if (parameters.ContainsKey("searchBy"))
-            {
-                personsController.ViewData["CurrentsearchBy"] = Convert.ToString(parameters["searchBy"]);
-            }
+                personsController.ViewData["CurrentSearchBy"] = Convert.ToString(parameters["searchBy"]);
 
             if (parameters.ContainsKey("searchString"))
-            {
-                personsController.ViewData["CurrentsearchString"] = Convert.ToString(parameters["searchString"]);
-            }
+                personsController.ViewData["CurrentSearchString"] = Convert.ToString(parameters["searchString"]);
 
             if (parameters.ContainsKey("sortBy"))
-            {
-                personsController.ViewData["CurrentsortBy"] = Convert.ToString(parameters["sortBy"]);
-            }
+                personsController.ViewData["CurrentSortBy"] = Convert.ToString(parameters["sortBy"]);
             else
-            {
                 personsController.ViewData["CurrentSortBy"] = nameof(PersonResponse.PersonName);
-            }
 
             if (parameters.ContainsKey("sortOrder"))
-            {
-                personsController.ViewData["CurrentsortOrder"] = Convert.ToString(parameters["sortOrder"]);
-            }
+                personsController.ViewData["CurrentSortOrder"] = Convert.ToString(parameters["sortOrder"]);
             else
-            {
                 personsController.ViewData["CurrentSortOrder"] = nameof(SortOrderOptions.ASC);
-            }
         }
 
         personsController.ViewBag.SearchFields = new Dictionary<string, string>()
@@ -70,6 +59,7 @@ public class PersonsListActionFilter : IActionFilter
         context.HttpContext.Items["arguments"] = context.ActionArguments;
 
         // To do: add before logic here
+
         _logger.LogInformation("{FilterName}.{MethodName}", nameof(PersonsListActionFilter), nameof(OnActionExecuting));
 
         if (context.ActionArguments.ContainsKey("searchBy"))

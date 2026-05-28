@@ -8,23 +8,24 @@ namespace ContactsManager.Filters.ActionFilters;
 
 public class PersonCreateAndEditPostActionFilter : IAsyncActionFilter
 {
-    private readonly ICountriesService _countriesService;
+    private readonly ICountriesGetterService _countriesGetterService;
     private readonly ILogger<PersonCreateAndEditPostActionFilter> _logger;
 
-    public PersonCreateAndEditPostActionFilter(ICountriesService countriesService, ILogger<PersonCreateAndEditPostActionFilter> logger)
+    public PersonCreateAndEditPostActionFilter(ICountriesGetterService countriesService, ILogger<PersonCreateAndEditPostActionFilter> logger)
     {
-        _countriesService = countriesService;
+        _countriesGetterService = countriesService;
         _logger = logger;
     }
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         // TO DO: before logic
+
         if (context.Controller is PersonsController personsController)
         {
             if (!personsController.ModelState.IsValid)
             {
-                List<CountryResponse> countries = await _countriesService.GetAllCountries();
+                List<CountryResponse> countries = await _countriesGetterService.GetAllCountries();
                 personsController.ViewBag.Countries = countries.Select(temp => new SelectListItem()
                 {
                     Text = temp.CountryName,
@@ -35,16 +36,12 @@ public class PersonCreateAndEditPostActionFilter : IAsyncActionFilter
                 context.Result = personsController.View(personRequest); // short-circuits or skips the subsequent action filters & action method
             }
             else
-            {
                 await next(); // invokes the subsuqent filter or action method
-            }
         }
         else
-        {
             await next(); // calls the subsequent filter or action method
-        }
 
         // TO DO: after logic
-        _logger.LogInformation("In after logiv of PersonsCreateAndEdit Action filter");
+        _logger.LogInformation("In after logic of PersonsCreateAndEdit Action filter");
     }
 }

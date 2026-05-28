@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ContactsManager.Core.Enums;
+﻿namespace ContactsManager.Core.Enums;
 
 public enum UserTypeOptions
 {

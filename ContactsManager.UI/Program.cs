@@ -1,13 +1,6 @@
 using Microsoft.AspNetCore.Localization;
-using ServiceContracts;
-using Services;
 using System.Globalization;
-using Microsoft.EntityFrameworkCore;
-using Entities;
-using RepositoryContracts;
-using Repositories;
 using Serilog;
-using ContactsManager.Filters.ActionFilters;
 using ContactsManager;
 using ContactsManager.Middleware;
 
@@ -33,6 +26,7 @@ var localizationOptions = new RequestLocalizationOptions
 };
 app.UseRequestLocalization(localizationOptions);
 
+// create application pipeline
 if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();

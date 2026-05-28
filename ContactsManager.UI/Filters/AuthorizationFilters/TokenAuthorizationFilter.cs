@@ -14,8 +14,6 @@ public class TokenAuthorizationFilter : IAuthorizationFilter
         }
 
         if (context.HttpContext.Request.Cookies["Auth-Key"] != "A100")
-        {
             context.Result = new StatusCodeResult(StatusCodes.Status401Unauthorized);
-        }
     }
 }

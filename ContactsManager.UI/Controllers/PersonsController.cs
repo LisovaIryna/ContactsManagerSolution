@@ -26,18 +26,18 @@ public class PersonsController : Controller
     private readonly IPersonsUpdaterService _personsUpdaterService;
     private readonly IPersonsDeleterService _personsDeleterService;
     private readonly IPersonsSorterService _personsSorterService;
-    private readonly ICountriesService _countriesService;
+    private readonly ICountriesGetterService _countriesGetterService;
     private readonly ILogger<PersonsController> _logger;
 
     // constructor
-    public PersonsController(IPersonsGetterService personsGetterService, IPersonsAdderService personsAdderService, IPersonsUpdaterService personsUpdaterService, IPersonsDeleterService personsDeleterService, IPersonsSorterService personsSorterService, ICountriesService countriesService, ILogger<PersonsController> logger)
+    public PersonsController(IPersonsGetterService personsGetterService, IPersonsAdderService personsAdderService, IPersonsUpdaterService personsUpdaterService, IPersonsDeleterService personsDeleterService, IPersonsSorterService personsSorterService, ICountriesGetterService countriesGetterService, ILogger<PersonsController> logger)
     {
         _personsGetterService = personsGetterService;
         _personsAdderService = personsAdderService;
         _personsUpdaterService = personsUpdaterService;
         _personsDeleterService = personsDeleterService;
         _personsSorterService = personsSorterService;
-        _countriesService = countriesService;
+        _countriesGetterService = countriesGetterService;
         _logger = logger;
     }
 
@@ -70,7 +70,7 @@ public class PersonsController : Controller
     [ResponseHeaderFilterFactory("my-key", "my-value", 4)]
     public async Task<IActionResult> Create()
     {
-        List<CountryResponse> countries = await _countriesService.GetAllCountries();
+        List<CountryResponse> countries = await _countriesGetterService.GetAllCountries();
         ViewBag.Countries = countries.Select(temp => new SelectListItem()
         {
             Text = temp.CountryName,
@@ -78,7 +78,7 @@ public class PersonsController : Controller
         });
 
         //new SelectListItem() { Text = "Harsha", Value = "1" }
-        // <option value="1">Harsha</option>
+        //<option value="1">Harsha</option>
         return View();
     }
 
@@ -87,12 +87,12 @@ public class PersonsController : Controller
     [Route("[action]")]
     [TypeFilter(typeof(PersonCreateAndEditPostActionFilter))]
     [TypeFilter(typeof(FeatureDisabledResourceFilter), Arguments = new object[] { false })]
-    public async Task<IActionResult> Create(PersonAddRequest personRequest)
+    public async Task<IActionResult> Create(PersonAddRequest personAddRequest)
     {        
         // call the service method
-        PersonResponse personResponse = await _personsAdderService.AddPerson(personRequest);
+        PersonResponse personResponse = await _personsAdderService.AddPerson(personAddRequest);
         
-        // navigate to Index() action method (it makes another get request to "persons/index"
+        // navigate to Index() action method (it makes another get request to "persons/index")
         return RedirectToAction("Index", "Persons");
     }
 
@@ -103,13 +103,11 @@ public class PersonsController : Controller
     {
         PersonResponse? personResponse = await _personsGetterService.GetPersonByPersonID(personID);
         if (personResponse == null)
-        {
             return RedirectToAction("Index");
-        }
 
         PersonUpdateRequest personUpdateRequest = personResponse.ToPersonUpdateRequest();
 
-        List<CountryResponse> countries = await _countriesService.GetAllCountries();
+        List<CountryResponse> countries = await _countriesGetterService.GetAllCountries();
         ViewBag.Countries = countries.Select(temp => new SelectListItem()
         {
             Text = temp.CountryName,
@@ -123,15 +121,13 @@ public class PersonsController : Controller
     [Route("[action]/{personID}")]
     [TypeFilter(typeof(PersonCreateAndEditPostActionFilter))]
     [TypeFilter(typeof(TokenAuthorizationFilter))]
-    public async Task<IActionResult> Edit(PersonUpdateRequest personRequest)
+    public async Task<IActionResult> Edit(PersonUpdateRequest personUpdateRequest)
     {
-        PersonResponse? personResponse = await _personsGetterService.GetPersonByPersonID(personRequest.PersonID);
+        PersonResponse? personResponse = await _personsGetterService.GetPersonByPersonID(personUpdateRequest.PersonID);
         if (personResponse == null)
-        {
             return RedirectToAction("Index");
-        }
 
-        PersonResponse updatedPerson = await _personsUpdaterService.UpdatePerson(personRequest);
+        PersonResponse updatedPerson = await _personsUpdaterService.UpdatePerson(personUpdateRequest);
         return RedirectToAction("Index");
     }
 

@@ -1,26 +1,16 @@
-﻿using System;
-using Entities;
+﻿using Entities;
 using ServiceContracts.DTO;
 using ServiceContracts;
-using System.ComponentModel.DataAnnotations;
 using Services.Helpers;
-using ServiceContracts.Enums;
-using CsvHelper;
-using System.Globalization;
-using System.IO;
-using CsvHelper.Configuration;
-using OfficeOpenXml;
 using RepositoryContracts;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using SerilogTimings;
-using Exceptions;
 
 namespace Services;
 
 public class PersonsAdderService : IPersonsAdderService
 {
-    // private field
+    // private fields
     private readonly IPersonsRepository _personsRepository;
     private readonly ILogger<PersonsGetterService> _logger;
     private readonly IDiagnosticContext _diagnosticContext;
@@ -37,9 +27,7 @@ public class PersonsAdderService : IPersonsAdderService
     {
         // check if PersonAddRequest is not null
         if (personAddRequest == null)
-        {
             throw new ArgumentNullException(nameof(personAddRequest));
-        }
 
         // Model validation
         ValidationHelper.ModelValidation(personAddRequest);

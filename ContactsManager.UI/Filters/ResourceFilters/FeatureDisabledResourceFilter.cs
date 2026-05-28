@@ -17,6 +17,7 @@ public class FeatureDisabledResourceFilter : IAsyncResourceFilter
     public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
     {
         // TO DO: before logic
+
         _logger.LogInformation("{FilterName}.{MethodName} - before", nameof(FeatureDisabledResourceFilter), nameof(OnResourceExecutionAsync));
         if (_isDisabled)
         {
@@ -27,6 +28,7 @@ public class FeatureDisabledResourceFilter : IAsyncResourceFilter
             await next();
 
         // TO DO: after logic
+
         _logger.LogInformation("{FilterName}.{MethodName} - after", nameof(FeatureDisabledResourceFilter), nameof(OnResourceExecutionAsync));
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RepositoryContracts;
-using System;
 using System.Linq.Expressions;
 
 namespace Repositories;
@@ -58,7 +57,7 @@ public class PersonsRepository : IPersonsRepository
 
     public async Task<Person> UpdatePerson(Person person)
     {
-        Person? matchingPerson = await _db.Persons.FirstAsync(temp => temp.PersonID == person.PersonID);
+        Person? matchingPerson = await _db.Persons.FirstOrDefaultAsync(temp => temp.PersonID == person.PersonID);
 
         if (matchingPerson == null)
             return person;

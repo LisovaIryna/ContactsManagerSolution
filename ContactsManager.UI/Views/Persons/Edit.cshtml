@@ -72,7 +72,7 @@
                 }
                 @foreach (string gender in genders)
                 {
-                    <input type="radio" asp-for="Gender" value="@gender" />
+                    <input type="radio" asp-for="Gender" value="@gender" id="@gender" />
                     <label for="@gender">@gender</label>
                 }
                 <span asp-validation-for="Gender" class="text-red"></span>

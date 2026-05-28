@@ -1,5 +1,4 @@
 ﻿using ServiceContracts.Enums;
-using System;
 using Entities;
 
 namespace ServiceContracts.DTO;
@@ -82,7 +81,7 @@ public static class PersonExtensions
     /// <returns>Returns the converted PersonResponse object</returns>
     public static PersonResponse ToPersonResponse(this Person person)
     {
-        // person => PersonResponse
+        // person => convert => PersonResponse
         return new PersonResponse()
         {
             PersonID = person.PersonID,

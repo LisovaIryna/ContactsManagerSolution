@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
-using Services;
 
 namespace ContactsManager.Controllers;
 
 [Route("[controller]")]
 public class CountriesController : Controller
 {
-    private readonly ICountriesService _countriesService;
+    private readonly ICountriesGetterService _countriesGetterService;
+    private readonly ICountriesUploaderService _countriesUploaderService;
 
-    public CountriesController(ICountriesService countriesService)
+    public CountriesController(ICountriesGetterService countriesGetterService, ICountriesUploaderService countriesUploaderService)
     {
-        _countriesService = countriesService;
+        _countriesGetterService = countriesGetterService;
+        _countriesUploaderService = countriesUploaderService;
     }
 
     [Route("UploadFromExcel")]
@@ -36,7 +37,7 @@ public class CountriesController : Controller
             return View();
         }
 
-        int countriesCountInserted = await _countriesService.UploadCountriesFromExcelFile(excelFile);
+        int countriesCountInserted = await _countriesUploaderService.UploadCountriesFromExcelFile(excelFile);
 
         ViewBag.Message = $"{countriesCountInserted} Countries Upload";
         return View();

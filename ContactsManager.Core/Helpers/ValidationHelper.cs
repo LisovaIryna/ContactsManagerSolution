@@ -1,7 +1,4 @@
-﻿using ServiceContracts.DTO;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Services.Helpers;
 
@@ -14,8 +11,6 @@ public class ValidationHelper
         List<ValidationResult> validationResults = new();
         bool isValid = Validator.TryValidateObject(obj, validationContext, validationResults, true);
         if (!isValid)
-        {
             throw new ArgumentException(validationResults.FirstOrDefault()?.ErrorMessage);
-        }
     }
 }

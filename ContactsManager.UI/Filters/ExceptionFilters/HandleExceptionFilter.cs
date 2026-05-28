@@ -20,10 +20,10 @@ public class HandleExceptionFilter : IExceptionFilter
             nameof(HandleExceptionFilter), nameof(OnException), context.Exception.GetType().ToString(), context.Exception.Message);
 
         if (_hostEnvironment.IsDevelopment())
-        context.Result = new ContentResult()
-        {
-            Content = context.Exception.Message,
-            StatusCode = 500
-        };
+            context.Result = new ContentResult()
+            {
+                Content = context.Exception.Message,
+                StatusCode = 500
+            };
     }
 }

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Serilog;
-using System.Threading.Tasks;
+﻿using Serilog;
 
 namespace ContactsManager.Middleware
 {
@@ -28,13 +25,9 @@ namespace ContactsManager.Middleware
             catch (Exception ex)
             {
                 if (ex.InnerException != null)
-                {
                     _logger.LogError("{ExceptionType} {ExceptionMessage}", ex.InnerException.GetType().ToString(), ex.InnerException.Message);
-                }
                 else
-                {
                     _logger.LogError("{ExceptionType} {ExceptionMessage}", ex.GetType().ToString(), ex.Message);
-                }
 
                 //httpContext.Response.StatusCode = 500;
                 //await httpContext.Response.WriteAsync("Error occurred");
@@ -44,7 +37,7 @@ namespace ContactsManager.Middleware
         }
     }
 
-    // Extension method used to add the middleware to the HTTP request pipeline.
+    // Extension method used to add the middleware to the HTTP request pipeline
     public static class ExceptionHandlingMiddlewareExtensions
     {
         public static IApplicationBuilder UseExceptionHandlingMiddleware(this IApplicationBuilder builder)
